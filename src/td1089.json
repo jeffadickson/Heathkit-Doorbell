@@ -1,0 +1,44 @@
+{
+  "model": "Heathkit TD-1089 Programmable Electronic Chimes",
+  "schematic": {
+    "heath_part": "595-1826-05",
+    "copyright": "1975 Heath Company",
+    "source_url": "https://www.vintage-radio.info/download.php?id=759",
+    "file": "book/heath/td1089-schematic.pdf",
+    "bytes": 5320621,
+    "sha256": "61267bb9d6f72e8bcdb4f1734c8c7055ea03b75f264d71cf0db4b1fd997681e8"
+  },
+  "matrix": { "notes": 13, "beats": 16, "sockets_per_note": 9 },
+  "ladder_top_to_bottom": [
+    ["R31", 27000, "C'"],
+    ["R32", 3300, "B"],
+    ["R33", 3600, "A#"],
+    ["R34", 3600, "A"],
+    ["R35", 3900, "G#"],
+    ["R36", 3900, "G"],
+    ["R37", 4300, "F#"],
+    ["R38", 4700, "F"],
+    ["R39", 4700, "E"],
+    ["R41", 5100, "D#"],
+    ["R42", 5600, "D"],
+    ["R43", 5600, "C#"],
+    ["R44", 6200, "C"]
+  ],
+  "tuning_pot": ["R45", 50000],
+  "fitted_offset_ohms": 27250,
+  "max_cents_error": 4.0,
+  "ics": {
+    "IC1": ["443-?", "7404 (by pinout)", "button latches and reset inverters"],
+    "IC2": ["443-640", "7493 (by pinout)", "beat counter"],
+    "IC3": ["443-623", "74154 (by pinout)", "1-of-16 beat decoder"],
+    "IC4": ["443-640", "7493 (by pinout)", "octave divider"],
+    "IC5": ["442-610", "unidentified", "audio power amplifier"]
+  },
+  "catalog": {
+    "fall_1978_price_usd": 44.95,
+    "fall_1984_price_usd": 49.95,
+    "cpi_u_1978": 65.2,
+    "cpi_u_1984": 103.9,
+    "cpi_u_aug_2026": 334.980
+  }
+}

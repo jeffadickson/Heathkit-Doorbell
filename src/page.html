@@ -1,0 +1,316 @@
+<title>Heathkit TD-1089</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one long bench-manual page — catalog card up top, the working kit (programming matrix + two doorbell buttons) as the centerpiece, then the real circuit stage by stage, the designer, price, sources. Colours lifted from the kit itself: brown cabinet, gold trim, tan fabric grille. */
+:root{
+  --bg:#231812; --panel:#2f2219; --panel-2:#3a2a1f; --fg:#f2e9da; --muted:#bfae95;
+  --gold:#d9ad45; --gold-ink:#231812; --fabric-a:#b9a07a; --fabric-b:#a68c66;
+  --led:#ff6a3d; --led-off:#4a3426; --rule:#4d3a2c; --hole:#140d09; --good:#7fbf6a;
+  --f-display:"Barlow Condensed","Arial Narrow",Arial,sans-serif;
+  --f-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  color-scheme:dark;
+}
+@media (prefers-color-scheme: light){:root:not([data-theme="dark"]){
+  --bg:#f5f2ec; --panel:#ffffff; --panel-2:#ece5d8; --fg:#2a1d15; --muted:#6e5b47;
+  --gold:#9a6b12; --gold-ink:#ffffff; --fabric-a:#cdb892; --fabric-b:#bba57e;
+  --led:#e2481c; --led-off:#d9cdb9; --rule:#ddd2c1; --hole:#5a4636; --good:#3c7a2c; color-scheme:light}}
+:root[data-theme="light"]{
+  --bg:#f5f2ec; --panel:#ffffff; --panel-2:#ece5d8; --fg:#2a1d15; --muted:#6e5b47;
+  --gold:#9a6b12; --gold-ink:#ffffff; --fabric-a:#cdb892; --fabric-b:#bba57e;
+  --led:#e2481c; --led-off:#d9cdb9; --rule:#ddd2c1; --hole:#5a4636; --good:#3c7a2c; color-scheme:light}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font:16px/1.6 var(--f-body);margin:0}
+.wrap{max-width:980px;margin:0 auto;padding-inline:20px;padding-block:28px 64px;display:grid;gap:56px}
+h1,h2,h3{font-family:var(--f-display);font-weight:700;letter-spacing:.01em;text-wrap:balance;margin:0;line-height:1.05}
+h1{font-size:clamp(2.6rem,7vw,4.4rem);text-transform:uppercase}
+h2{font-size:clamp(1.8rem,4vw,2.4rem);text-transform:uppercase}
+h3{font-size:1.25rem;text-transform:uppercase;letter-spacing:.04em}
+h3 small{font:500 .78rem var(--f-mono);letter-spacing:.06em;color:var(--gold);text-transform:none;margin-left:6px}
+p{margin:0;max-width:65ch}
+.eyebrow{font:500 .78rem var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+.muted{color:var(--muted)}
+a{color:var(--gold)}
+section{display:grid;gap:18px;min-width:0}
+.num{font-variant-numeric:tabular-nums}
+code,.ref{font-family:var(--f-mono);font-size:.88em}
+
+.hero{display:grid;grid-template-columns:1.25fr 1fr;gap:28px;align-items:start}
+.hero > *{min-width:0}
+.hero .lede{display:grid;gap:14px}
+.spec{border-top:3px solid var(--gold);background:var(--panel);padding:16px 18px;display:grid;gap:2px}
+.spec dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:.92rem}
+.spec dt{font:500 .72rem var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding-top:3px}
+.spec dd{margin:0}
+.price{display:flex;flex-wrap:wrap;gap:10px 22px;align-items:baseline;padding-bottom:12px;border-bottom:1px solid var(--rule);margin-bottom:10px}
+.price b{font:700 2.4rem var(--f-display)}
+.price span{color:var(--muted);font-size:.9rem}
+
+.kit{background:var(--panel-2);border:2px solid var(--gold);border-radius:6px;padding:18px;display:grid;gap:16px}
+.kit-top{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;justify-content:space-between}
+.presets{display:flex;flex-wrap:wrap;gap:8px}
+button{font:inherit;cursor:pointer}
+.chip{font:500 .82rem var(--f-mono);padding:6px 10px;border-radius:3px;border:1px solid var(--rule);background:var(--panel);color:var(--fg)}
+.chip[aria-pressed="true"]{background:var(--gold);color:var(--gold-ink);border-color:var(--gold)}
+.chip:focus-visible,.cell:focus-visible,.bell:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--led);outline-offset:2px}
+.matrix-scroll{overflow-x:auto;padding-bottom:4px}
+.board{display:grid;grid-template-columns:40px repeat(16,minmax(26px,1fr)) 34px;gap:3px;min-width:600px;
+  background:repeating-linear-gradient(45deg,var(--fabric-a) 0 2px,var(--fabric-b) 2px 4px);padding:10px;border-radius:4px}
+.lbl{font:500 .72rem var(--f-mono);display:flex;align-items:center;justify-content:center;color:#2a1d15}
+.lbl.note{justify-content:flex-start;padding-left:2px;font-weight:600}
+.lbl.beat{flex-direction:column;gap:2px;font-size:.62rem}
+.cnt{font:500 .68rem var(--f-mono);display:flex;align-items:center;justify-content:center;color:#2a1d15}
+.cnt.full{color:#8a1c00;font-weight:600}
+.cell{aspect-ratio:1;border:0;padding:0;border-radius:50%;background:radial-gradient(circle at 50% 55%,var(--hole) 0 30%,#d8c7a6 32% 46%,transparent 48%);position:relative}
+.cell.on{background:radial-gradient(circle at 50% 50%,#ffd76a 0 30%,#c48a18 34% 50%,transparent 52%)}
+.cell.on::after{content:"";position:absolute;left:50%;top:-4px;width:2px;height:calc(50% + 4px);background:#7a2614;transform:translateX(-50%);border-radius:1px}
+.led{width:12px;height:12px;border-radius:50%;background:var(--led-off)}
+.led.lit{background:var(--led);box-shadow:0 0 10px var(--led)}
+.led.rear{outline:2px solid #2a1d15;outline-offset:1px}
+.dedication{display:grid;gap:10px;padding-left:20px;border-left:3px solid var(--gold);max-width:62ch}
+.ded-line{font:600 clamp(1.5rem,3.6vw,2rem)/1.15 var(--f-display);letter-spacing:.02em;text-transform:uppercase}
+.dedication .sig{font:500 .9rem var(--f-mono);color:var(--muted)}
+.wireboard{display:grid;gap:8px}
+#wires{width:100%;height:auto;display:block;border-radius:4px;touch-action:none;user-select:none;-webkit-user-select:none}
+.hint{font-size:.85rem;color:var(--muted)}
+.controls{display:grid;grid-template-columns:auto 1fr;gap:18px 28px;align-items:start}
+.bells{display:flex;gap:18px;justify-content:center}
+.bellwrap{display:grid;gap:6px;justify-items:center;font:500 .72rem var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.bell{width:88px;height:88px;border-radius:50%;border:6px solid var(--gold);background:radial-gradient(circle at 40% 35%,#fff3c4,#e6b84d 45%,#9b6d14);
+  box-shadow:inset 0 -6px 12px rgba(0,0,0,.35),0 4px 0 #6b4a0e;display:grid;place-items:center;font:700 .9rem var(--f-display);letter-spacing:.06em;color:#3b2508}
+.bell.small{width:68px;height:68px;border-width:5px}
+.bell:active,.bell.pressed{transform:translateY(3px);box-shadow:inset 0 -3px 8px rgba(0,0,0,.35),0 1px 0 #6b4a0e}
+.knobs{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px 22px;min-width:0}
+.knob{display:grid;gap:4px}
+.knob label{font:500 .74rem var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);display:flex;justify-content:space-between;gap:8px}
+.knob label i{font-style:normal;color:var(--gold)}
+input[type=range]{width:100%;accent-color:var(--gold)}
+select{font:500 .85rem var(--f-mono);background:var(--panel);color:var(--fg);border:1px solid var(--rule);border-radius:3px;padding:5px 6px}
+.toggle{display:flex;gap:10px;align-items:flex-start;font-size:.9rem}
+.toggle input{margin-top:5px;accent-color:var(--gold)}
+.status{font:400 .82rem var(--f-mono);color:var(--muted)}
+
+.diagram{overflow-x:auto;background:var(--panel);border-radius:4px;padding:12px}
+.diagram svg{display:block;min-width:760px;width:100%;height:auto}
+.blk rect{fill:var(--panel-2);stroke:var(--gold);stroke-width:1.5}
+.blk text{fill:var(--fg);font:600 13px var(--f-body)}
+.dsub{fill:var(--muted);font:400 11px var(--f-mono)}
+.wire{stroke:var(--muted);stroke-width:1.6;fill:none}
+.wire.sig{stroke:var(--gold)}
+.arrowhead{fill:var(--muted)}
+.stages{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px 30px}
+.stages > div{display:grid;gap:8px;align-content:start;min-width:0}
+.callout{border-left:3px solid var(--gold);background:var(--panel);padding:12px 16px;font-size:.92rem;display:grid;gap:6px}
+blockquote{margin:0;padding:14px 18px;background:var(--panel);border-left:3px solid var(--gold)}
+table{border-collapse:collapse;width:100%;font-size:.9rem}
+th,td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--rule);vertical-align:top}
+th{font:500 .7rem var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+td.r,th.r{text-align:right;font-variant-numeric:tabular-nums}
+.tbl{overflow-x:auto}
+.ok{color:var(--good)}
+ul.src{margin:0;padding-left:18px;display:grid;gap:6px;font-size:.92rem}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:22px 30px;align-items:start}
+.two > *{min-width:0}
+
+@media (max-width:760px){.hero,.two{grid-template-columns:1fr}.controls{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){.led.lit{box-shadow:none}}
+</style>
+
+<div class="wrap">
+
+<header class="hero">
+  <div class="lede">
+    <div class="eyebrow">Heath Company · Benton Harbor, Michigan · schematic © 1975</div>
+    <h1>Programmable Electronic Chimes</h1>
+    <p>The Heathkit TD-1089 replaced the ding-dong with any tune you could fit into sixteen beats. You programmed it by plugging a wire lead from each beat into a one-octave row of note sockets. No microprocessor, no ROM: three TTL chips, a dozen transistors, and a string of thirteen resistors.</p>
+    <p class="muted">Below is a working model built from Heath’s schematic. Rewire the matrix, press the front or back door button, and hear it the way the circuit made it: octave-divided square waves, a shunt-transistor decay, a 340 Hz RC filter, and a 3×5-inch, 16-ohm oval speaker.</p>
+  </div>
+  <aside class="spec" aria-label="Catalog listing">
+    <div class="eyebrow">Catalog 841 · Fall 1978</div>
+    <div class="price"><b class="num">$44.95</b><span>Kit TD-1089 · shpg. wt. 3 lbs</span></div>
+    <dl>
+      <dt>Power</dt><dd>16 VAC from the existing doorbell transformer, 10 VA</dd>
+      <dt>Matrix</dt><dd>13 notes × 16 beats, one-octave C to C</dd>
+      <dt>Limit</dt><dd>Same note on at most 9 beats</dd>
+      <dt>Doors</dt><dd>Front plays all 16 beats; back plays the opening</dd>
+      <dt>Tone</dt><dd>“Decaying, mellow”</dd>
+      <dt>Speaker</dt><dd>3″ × 5″ oval, 16 Ω</dd>
+      <dt>Draw</dt><dd>6 W idle, 12 W max</dd>
+    </dl>
+  </aside>
+</header>
+
+<aside class="dedication" aria-label="Dedication">
+  <div class="eyebrow">Dedication</div>
+  <p class="ded-line">For Mom, who always wanted bells.</p>
+  <p>I built this kit for her when I was about ten, on the kitchen floor. My uncle had to resolder all my cold joints, and I never made another one. It sounded terrible. She kept it up for years anyway, and now I understand why.</p>
+  <p class="sig">— Jeff</p>
+</aside>
+
+<section aria-labelledby="kit-h">
+  <div class="eyebrow">The emulator</div>
+  <h2 id="kit-h">Program it, then ring it</h2>
+  <p class="muted">Each column is one beat lead, A1 to A16. Click a socket to plug that lead into a note; click it again to unplug it, which makes a rest. The right-hand count shows sockets used per note. The knobs carry their schematic names.</p>
+  <div class="kit">
+    <div class="kit-top">
+      <div class="presets" role="group" aria-label="Board view">
+        <button class="chip" id="modeWire" type="button" aria-pressed="true">Wire it like the kit</button>
+        <button class="chip" id="modeGrid" type="button" aria-pressed="false">Quick grid</button>
+      </div>
+      <button class="chip" id="clear" type="button">Unplug all</button>
+    </div>
+    <div class="presets" role="group" aria-label="Preset tunes" id="presets"></div>
+    <div id="wireView" class="wireboard">
+      <svg id="wires" viewBox="0 0 680 560" role="img" aria-label="Socket board: sixteen beat leads hanging from the beat bar, thirteen note rows of nine sockets. Drag a lead's plug into a socket; drop it anywhere else to unplug it."></svg>
+      <p class="hint">Drag a plug (the end of a wire, or the terminal at the top) into any free hole in a note’s row. Drop it off the board to leave that beat silent. Wire colours follow the resistor code by beat.</p>
+    </div>
+    <div class="matrix-scroll" id="gridView" hidden><div class="board" id="board" role="grid" aria-label="Programming matrix, 13 notes by 16 beats"></div></div>
+    <div class="controls">
+      <div class="bells">
+        <div class="bellwrap"><button class="bell" id="front" type="button" aria-label="Press the front door button">FRONT</button>Front door</div>
+        <div class="bellwrap"><button class="bell small" id="rear" type="button" aria-label="Press the back door button">BACK</button>Back door</div>
+      </div>
+      <div class="knobs">
+        <div class="knob"><label for="tempo"><span>Speed <i>R9</i></span><span id="tempoV" class="num"></span></label><input type="range" id="tempo" min="30" max="400" step="5" value="240"></div>
+        <div class="knob"><label for="decay"><span>Decay <i>R22</i></span><span id="decayV" class="num"></span></label><input type="range" id="decay" min="0.04" max="0.7" step="0.01" value="0.22"></div>
+        <div class="knob"><label for="tuning"><span>Tuning <i>R45</i></span><span id="tuningV" class="num"></span></label><input type="range" id="tuning" min="-9" max="6" step="1" value="0"></div>
+        <div class="knob"><label for="vol"><span>Volume <i>R28</i></span><span id="volV" class="num"></span></label><input type="range" id="vol" min="0" max="1" step="0.05" value="0.65"></div>
+        <div class="knob"><label for="rearpin"><span>Back door reset jumper</span></label>
+          <select id="rearpin"><option value="4">IC3 pin 4 · 4 beats</option><option value="5">IC3 pin 5 · 5 beats</option><option value="6">IC3 pin 6 · 6 beats</option><option value="7" selected>IC3 pin 7 · 7 beats</option><option value="8">IC3 pin 8 · 8 beats</option><option value="9">IC3 pin 9 · 9 beats</option></select></div>
+        <label class="toggle" for="ladder"><input type="checkbox" id="ladder" checked><span><b>Real resistor ladder.</b> Pitches from the actual 27K…6200 Ω string with ±5% parts, not perfect equal temperament.</span></label>
+        <label class="toggle" for="speaker"><input type="checkbox" id="speaker" checked><span><b>3×5 oval speaker.</b> Weak bass, a midrange peak, a bit of cone breakup, and 60 Hz ripple from the half-wave supply.</span></label>
+        <label class="toggle" for="cold"><input type="checkbox" id="cold"><span><b>Kitchen-floor build.</b> A cold joint on one ladder tap. Before your uncle reflowed it.</span></label>
+      </div>
+    </div>
+    <div class="status" id="status" aria-live="polite">Westminster quarters loaded. Press FRONT.</div>
+  </div>
+</section>
+
+<section aria-labelledby="ckt-h">
+  <div class="eyebrow">How it worked · from schematic 595-1826-05</div>
+  <h2 id="ckt-h">Three TTL chips and a resistor string</h2>
+  <div class="diagram">
+    <svg viewBox="0 0 940 360" role="img" aria-label="Signal flow of the TD-1089: two button latches built from a 7404 release a 7493 counter clocked by the Q1-Q2 beat generator; a 74154 decoder selects one of sixteen leads, which grounds a tap on the note ladder; that sets the Q7-Q8 tone oscillator; a second 7493 divides it into octaves; Q4 and Q5 shape the decay; an RC filter and IC5 drive the speaker; Q9 and Q10 regulate +5 and +14 volts from half-wave rectified 16 VAC.">
+      <defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="arrowhead"/></marker></defs>
+      <g class="blk"><rect x="10" y="20" width="150" height="58" rx="4"/><text x="85" y="44" text-anchor="middle">Front door latch</text><text x="85" y="64" text-anchor="middle" class="dsub">IC1A/B · 7404 · C1 .01</text></g>
+      <g class="blk"><rect x="10" y="100" width="150" height="58" rx="4"/><text x="85" y="124" text-anchor="middle">Back door latch</text><text x="85" y="144" text-anchor="middle" class="dsub">IC1D/E · 7404 · C2 .01</text></g>
+      <g class="blk"><rect x="10" y="200" width="150" height="58" rx="4"/><text x="85" y="224" text-anchor="middle">Beat generator</text><text x="85" y="244" text-anchor="middle" class="dsub">Q1/Q2 · C3 .68µF · R9</text></g>
+      <g class="blk"><rect x="210" y="60" width="150" height="58" rx="4"/><text x="285" y="84" text-anchor="middle">Counter</text><text x="285" y="104" text-anchor="middle" class="dsub">IC2 · 7493 · 4-bit</text></g>
+      <g class="blk"><rect x="210" y="150" width="150" height="58" rx="4"/><text x="285" y="174" text-anchor="middle">1-of-16 decoder</text><text x="285" y="194" text-anchor="middle" class="dsub">IC3 · 74154</text></g>
+      <g class="blk"><rect x="410" y="150" width="160" height="58" rx="4"/><text x="490" y="174" text-anchor="middle">16 diodes → leads</text><text x="490" y="194" text-anchor="middle" class="dsub">D3–D18 · A1–A16</text></g>
+      <g class="blk"><rect x="410" y="250" width="160" height="58" rx="4"/><text x="490" y="274" text-anchor="middle">Note ladder</text><text x="490" y="294" text-anchor="middle" class="dsub">R31–R44 · tune R45</text></g>
+      <g class="blk"><rect x="620" y="250" width="150" height="58" rx="4"/><text x="695" y="274" text-anchor="middle">Tone oscillator</text><text x="695" y="294" text-anchor="middle" class="dsub">Q7/Q8 · C8 · Q6</text></g>
+      <g class="blk"><rect x="620" y="150" width="150" height="58" rx="4"/><text x="695" y="174" text-anchor="middle">Octave divider</text><text x="695" y="194" text-anchor="middle" class="dsub">IC4 · 7493 · ÷2 ÷4 ÷8 ÷16</text></g>
+      <g class="blk"><rect x="620" y="60" width="150" height="58" rx="4"/><text x="695" y="84" text-anchor="middle">Decay + filter</text><text x="695" y="104" text-anchor="middle" class="dsub">Q4/Q5 · C4 · R27 C5 C6</text></g>
+      <g class="blk"><rect x="810" y="60" width="120" height="58" rx="4"/><text x="870" y="84" text-anchor="middle">Amp → spkr</text><text x="870" y="104" text-anchor="middle" class="dsub">IC5 · 16 Ω</text></g>
+      <g class="blk"><rect x="810" y="250" width="120" height="58" rx="4"/><text x="870" y="274" text-anchor="middle">Power</text><text x="870" y="294" text-anchor="middle" class="dsub">Q9 +5 · Q10 +14</text></g>
+      <path class="wire" d="M160 49 H185 V80 H206" marker-end="url(#ah)"/>
+      <path class="wire" d="M160 129 H185 V98 H206" marker-end="url(#ah)"/>
+      <path class="wire sig" d="M160 229 H192 V112 H206" marker-end="url(#ah)"/>
+      <path class="wire sig" d="M285 118 V146" marker-end="url(#ah)"/>
+      <path class="wire sig" d="M360 179 H406" marker-end="url(#ah)"/>
+      <path class="wire sig" d="M490 208 V246" marker-end="url(#ah)"/>
+      <path class="wire sig" d="M570 279 H616" marker-end="url(#ah)"/>
+      <path class="wire sig" d="M695 250 V212" marker-end="url(#ah)"/>
+      <path class="wire sig" d="M695 150 V122" marker-end="url(#ah)"/>
+      <path class="wire sig" d="M770 89 H806" marker-end="url(#ah)"/>
+      <path class="wire" d="M120 258 V330 H590 V36 H660 V56" marker-end="url(#ah)"/>
+      <text x="600" y="30" class="dsub">beat pulse restarts decay</text>
+      <text x="196" y="236" class="dsub">reset</text>
+      <text x="300" y="232" class="dsub">out 15 → front reset</text>
+      <text x="300" y="246" class="dsub">pins 4–9 → back reset</text>
+      <text x="410" y="236" class="dsub">plugged lead grounds a tap</text>
+    </svg>
+  </div>
+
+  <div class="stages">
+    <div><h3>Button latches <small>IC1 · 7404</small></h3>
+      <p>Each doorbell button pulls a terminal fed from +20 V through 680 Ω. Two inverters of a 7404 with a 270 Ω feedback resistor form a latch, so a tap of the button keeps the tune running. The counter is a 7493, which has two reset inputs that must both be active to hold it at zero. Heath gave one to each door’s latch, so either button frees the counter.</p></div>
+    <div><h3>Beat generator <small>Q1 · Q2</small></h3>
+      <p>A PNP/NPN pair wired as a regenerative switch, the discrete version of a unijunction oscillator. C3 (0.68 µF) charges through R11 (150K) plus the 2 MΩ SPEED pot until Q1 fires and dumps it. From the part values that is roughly 0.15 to 2 seconds per beat. Q3 buffers the pulse.</p></div>
+    <div><h3>Counter and decoder <small>IC2 · IC3</small></h3>
+      <p>The 7493 counts beats 0–15 and a 74154 turns the count into sixteen active-low lines. Each line goes through its own diode (D3–D18) to a flying lead. Only the selected line is low; the other fifteen sit high with their diodes reverse-biased, so leads plugged elsewhere stay out of the way.</p></div>
+    <div><h3>The two doors <small>reset wiring</small></h3>
+      <p>Decoder output 15 resets the front latch, so the front door plays the whole sixteen. The back door latch is reset by a wire you attach to one of IC3 pins 4–9, so it plays only the opening four to nine beats of the same tune. One program, two lengths.</p></div>
+    <div><h3>The note ladder <small>R31–R44</small></h3>
+      <p>The plugged lead grounds one tap on a series string of thirteen resistors. The tone oscillator’s timing resistance is everything from the 50K TUNING pot down the string to that tap, so lower rows mean more resistance and a lower note. No per-note trimmers: the string itself is the scale. See the table below for how good it is.</p></div>
+    <div><h3>Tone oscillator <small>Q7 · Q8 · Q6</small></h3>
+      <p>The same complementary-pair trick as the beat generator, with a 0.01 µF timing cap (C8), producing a train of narrow pulses. Q6 squares them up into the TONE line. An unplugged lead leaves the ladder floating, the oscillator stalls, and you get a rest for free.</p></div>
+    <div><h3>Octave divider <small>IC4 · 7493</small></h3>
+      <p>A second 7493 divides the tone by 2, 4, 8 and 16. The ÷4 output is the note you hear, fed in through 15K. The ÷8 and ÷16 outputs are mixed in quietly through 330K and 1M, a faint organ-style sub-octave. The beat pulse resets this counter too, so every note starts in phase.</p></div>
+    <div><h3>Decay <small>Q4 · Q5 · C4</small></h3>
+      <p>On each beat, Q4 dumps C4. C4 then recharges from the ÷2 square wave through R21 (27K), the 500K DECAY pot and D19, and its voltage turns Q5 on gradually. Q5 shunts the summed tone to ground, so the note fades as Q5 conducts. A shunt transistor as a VCA: cheap, and it gives the struck-chime fade.</p></div>
+    <div><h3>Why it sounded “mellow” <small>R27 · C5 · C6</small></h3>
+      <p>The square waves go through two RC poles: about 1.1 kHz at the summing node, then R27 (47K) with C6 (0.01 µF), a corner near 340 Hz. That removes most of the harmonics, which is why it sounded soft and a little dull, especially through a 3×5 speaker. IC5 (Heath 442-610) on the +14 V rail drives the speaker through 50 µF.</p></div>
+    <div><h3>Power <small>Q9 · Q10</small></h3>
+      <p>One diode (D22) half-wave rectifies the 16 VAC bell transformer into 1200 µF for +20 V. Two zener-referenced emitter followers make +5 V (6.2 V zener) and +14 V (15 V zener), each with a 5 W resistor in parallel to carry part of the current. TTL burning power around the clock is where the 6 W idle draw went.</p></div>
+  </div>
+
+  <div class="two">
+    <div class="tbl">
+      <table aria-label="Note ladder resistors and pitch error">
+        <thead><tr><th>Row</th><th>Resistor</th><th class="r">Value</th><th class="r">Error</th></tr></thead>
+        <tbody id="ladderTable"></tbody>
+      </table>
+    </div>
+    <div class="callout">
+      <b>The ladder is a nice piece of design.</b>
+      <span>Pitch goes as 1 / (R<sub>tune</sub> + R<sub>string</sub>). With the TUNING pot and oscillator contributing about 27.25K, these off-the-shelf 5% values land every note within about ±4 cents of equal temperament, finer than most ears can hear. Ascending the scale, each step needs about 6% more resistance than the last, so the values climb from 3300 to 6200 Ω.</span>
+      <span class="muted">Error column: nominal values with the offset fitted for best match. Real 5% parts add more; the emulator’s “real ladder” mode rolls its own tolerances.</span>
+    </div>
+  </div>
+  <p class="muted">Part identities: Heath stock numbers 443-640 and 443-623 match the 7493 and 74154 by pinout (Vcc on pin 5 and pins 20–24 respectively), and IC1’s pin pairs match a 7404. IC5 is listed only as Heath 442-610; I haven’t pinned down the industry number.</p>
+</section>
+
+<section aria-labelledby="story-h">
+  <div class="eyebrow">The designer</div>
+  <h2 id="story-h">Terry Perdue, K8TP</h2>
+  <div class="two">
+    <div style="display:grid;gap:14px">
+      <p>Perdue was a Heath design engineer from 1973 to 1991, in the amateur radio group. His best-known ham product is the HD-1780 Intellirotor, a computerized antenna-rotator controller. He built the doorbell prototype at home after a Heath colleague, Joe Huber, got him into digital logic.</p>
+      <p>Heath wanted the doorbell, but Director of Engineering Ray Freridge wouldn’t let a ham-group engineer kit a non-ham product. It went to Bjorn Heyning in the General products group, who cut cost by replacing Perdue’s posts and snap-on clips with rows of cheap wire sockets and, as Perdue remembered it, used simpler button inputs with little hysteresis. The schematic agrees: plain 7404 inverters on the button lines, not Schmitt triggers.</p>
+      <p>Perdue’s own proofbuild rang when the button was pressed, rang (or played back his voice) when he transmitted on certain ham bands, and rang every time the toilet flushed. The house ran on a well with a small pressure tank, so each flush started the pump, and the glitch coupled into the long doorbell wiring. A bypass capacitor on each button input cured it. The production schematic has exactly that: 0.01 µF, C1 and C2, on both door inputs.</p>
+    </div>
+    <div style="display:grid;gap:14px">
+      <blockquote>He closed his story by insisting the “TD” didn’t really stand for Toilet Detector.</blockquote>
+      <div class="callout">
+        <b>He became Heath’s historian.</b>
+        <span>After leaving Heath, Perdue self-published <i>Heath Nostalgia</i> (1992), a 124-page company history with factory photos and recollections from long-time employees, and later a CD, <i>Heathkit: The Early Years</i>, with roughly a thousand scanned photos, catalogs and documents plus a 30-minute recording of Heath’s first Director of Engineering, Gene Fiebich. Both are out of print. Former Heath VP Chas Gilmore has called Perdue’s the most accurate of the Heath histories.</span>
+      </div>
+      <p class="muted">For an EMC engineer it is a tidy case: high-impedance inputs, long unshielded runs, and no hysteresis, with two failure paths (conducted transient and RF pickup) and one capacitor that fixed both.</p>
+    </div>
+  </div>
+</section>
+
+<section aria-labelledby="price-h">
+  <div class="eyebrow">What it cost</div>
+  <h2 id="price-h">$44.95, in today’s money</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>Catalog</th><th class="r">Price then</th><th class="r">CPI-U then</th><th class="r">Aug 2026 dollars</th></tr></thead>
+    <tbody>
+      <tr><td>Fall 1978 (Catalog 841)</td><td class="r">$44.95</td><td class="r">65.2</td><td class="r"><b>≈ $231</b></td></tr>
+      <tr><td>Fall 1984</td><td class="r">$49.95</td><td class="r">103.9</td><td class="r"><b>≈ $161</b></td></tr>
+    </tbody>
+  </table></div>
+  <p class="muted">Scaled by the CPI-U annual average for the catalog year against the August 2026 index of 334.980 (1982–84 = 100). Heath held the price nearly flat while inflation ran hot, so the kit got cheaper in real terms over a run that lasted from the mid-1970s into at least 1989. Built units and unbuilt kits now trade on eBay roughly in the $100–$180 range.</p>
+</section>
+
+<section aria-labelledby="src-h">
+  <div class="eyebrow">Sources</div>
+  <h2 id="src-h">Where this came from</h2>
+  <ul class="src">
+    <li><a href="https://www.vintage-radio.info/download.php?id=759">TD-1089 schematic, Heath 595-1826-05</a> (direct download, 5.3 MB PDF), from the <a href="https://www.vintage-radio.info/heathkit/">vintage-radio.info Heathkit archive</a>. Its notes refer to page 72 of the assembly manual, which isn’t online.</li>
+    <li><a href="https://www.worldradiohistory.com/Archive-Catalogs/Heathkit-Catalogs/Heathkit-1978-Fall-a.pdf">Heathkit Catalog 841, Fall 1978</a>, page 4: description, specs, price and photo.</li>
+    <li><a href="https://www.worldradiohistory.com/Archive-Catalogs/Heathkit-Catalogs/Heathkit-Fall-1984.pdf">Heathkit Catalog, Fall 1984</a>: $49.95.</li>
+    <li><a href="https://puck.nether.net/pipermail/heath/2010-January/025341.html">Terry Perdue, “TD-1089 Toilet Flush Alarm,” Heath mailing list, January 2010</a>.</li>
+    <li><a href="https://www.eejournal.com/article/h-is-for-heathkits-and-hams-part-5-reasons-for-heaths-success-in-amateur-radio/">EEJournal, “H is for Heathkits and Hams,” part 5</a>: Perdue’s years at Heath, the Intellirotor, his book and CD.</li>
+    <li><a href="https://www.eejournal.com/article/the-rise-and-fall-of-heathkit-part-1-early-days/">EEJournal, “The Rise and Fall of Heathkit,” part 1</a>: Gilmore on Perdue’s history.</li>
+    <li><a href="https://www.nostalgickitscentral.com/heath/heathres.html">Nostalgic Kits Central, Heath resources</a>: <i>Heath Nostalgia</i> details.</li>
+    <li><a href="https://www.bls.gov/news.release/cpi.nr0.htm">BLS CPI release, August 2026</a>.</li>
+  </ul>
+</section>
+</div>
+
+<script>
+/*@EMULATOR@*/</script>
